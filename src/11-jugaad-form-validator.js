@@ -1,10 +1,11 @@
 /**
- * 📋 Jugaad Form Validator - Indian Style!
+ * 📋 !Jugaad Form Validator - Indian Style!
  *
  * India mein form bharna ek art hai! College admission ka form validate
- * karna hai. Har field ke apne rules hain. Tujhe ek errors object return
- * karna hai jisme galat fields ke error messages hain. Agar sab sahi hai
- * toh empty errors object aur isValid = true.
+ * karna hai. Har field ke apne rules hain. Tujhe 
+ *    ek errors object return
+ * karna hai jisme galat fields ke error messages hain. Agar 
+ * sab sahi hai toh empty errors object aur isValid = true.
  *
  * formData object:
  *   { name, email, phone, age, pincode, state, agreeTerms }
@@ -63,4 +64,123 @@
  */
 export function validateForm(formData) {
   // Your code here
+  // let ({ name, email, phone, age, pincode, state, agreeTerms } = formData);
+  let errors = {};
+
+  //Validation
+  // name,
+  handleNameValidation(formData?.name, errors);
+  //  email,
+  handleEmailValidation(formData?.email, errors);
+  //  phone,
+  handlePhoneValidation(formData?.phone, errors);
+  //  age,
+  handleAgeValidation(formData?.age, errors);
+  //  pincode,
+  handlePincodeValidation(formData?.pincode, errors);
+  //  state,
+  handleStateValidation(formData?.state, errors);
+  //  agreeTerms
+  handleAgreeTermsValidation(formData?.agreeTerms, errors);
+
+  //
+  const isValid = ( Object.keys(errors).length === 0)? true : false;
+
+  return {isValid, errors};
+}
+
+//handleValidation
+// name,
+function handleNameValidation(name, error){
+  const errorMessage = "Name must be 2-50 characters";
+  
+  if(typeof name !== "string" 
+    || name.trim().length < 2
+    || name.trim().length > 50
+  ){
+    error.name = errorMessage;
+    return
+  }
+  
+}
+
+//  email,
+function handleEmailValidation(email, error){
+  const errorMessage = "Invalid email format";
+  if(
+    typeof email !== 'string' || !email.includes('@') 
+    || !email.includes( '.', !email.lastIndexOf("@") )
+  ){
+    //
+    error.email = errorMessage;
+    return;
+  }else{
+    if( email.indexOf("@") !== email.lastIndexOf("@") ){
+      error.email = errorMessage;
+    }
+    return;
+  }
+}
+//  phone,
+function handlePhoneValidation(phone, error) {
+    const errorMessage = "Invalid Indian phone number";
+    const startsWith = ["6", "7", "8", '9', 9, 6, 7, 8];
+    const myReg = /[^0-9]+/g;
+    // const nonDigits = 
+
+    if (
+        typeof phone !== 'string' || phone.length !== 10
+        || !startsWith.includes(phone[0])
+        || [...phone.matchAll(myReg)].length !== 0
+    ) {
+        error.phone = errorMessage;
+    }
+    return;
+}
+//  age,
+function handleAgeValidation(age, error) {
+    const parseAge = (typeof age === 'string')? Number(age): age;
+    const errorMessage = "Age must be an integer between 16 and 100";
+
+    if (Number.isNaN(parseAge)
+        || parseAge < 16 || parseAge > 100
+        || !Number.isInteger( parseAge ) 
+    ) {
+        error.age = errorMessage;
+    }
+    return;
+}
+//  pincode,
+function handlePincodeValidation(pincode, error) {
+    const errorMessage = "Invalid Indian pincode";
+    const myReg = /[^0-9]+/g;
+
+    if (typeof pincode !== 'string'
+        || pincode.length !== 6
+        || pincode[0] === '0'
+        // ! Error Resolved here through [...] spread
+        || [...pincode.matchAll(myReg)].length !== 0
+    ) {
+        error.pincode = errorMessage;
+    }
+    return;
+}
+//  state,
+function handleStateValidation(state, error){
+  const errorMessage = "State is required";
+
+  if(typeof state !== 'string' || state.trim() === ""){
+    error.state = errorMessage;
+    return
+  }
+}
+//  agreeTerms
+function handleAgreeTermsValidation(agreeTerms, error){
+  const errorMessage = "Must agree to terms";
+
+  if(agreeTerms){
+    return;
+  }else{
+    error.agreeTerms = errorMessage;
+  }
 }
