@@ -8,6 +8,7 @@
     "test:watch": "NODE_OPTIONS=--experimental-vm-modules jest --watchAll",
     "test:win": "set NODE_OPTIONS=--experimental-vm-modules&& jest",
     "test:win:watch": "set NODE_OPTIONS=--experimental-vm-modules&& jest --watchAll"
+  
   },
   "keywords": ["javascript", "datatypes", "lab", "education"],
   "license": "MIT",

@@ -239,3 +239,8 @@ You can push again to improve your score — GitHub Classroom will always use th
 ---
 
 Good luck! Aur haan, built-in methods ka MDN documentation khul ke rakho!
+
+
+<!-- package script
+  "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
+ -->
